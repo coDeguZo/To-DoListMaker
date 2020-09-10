@@ -1,17 +1,48 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import { ToDo, fetchTodos } from '../redux/actions/actions'
+import { StoreState } from '../redux/reducers/reducers'
 
-class App extends Component {
-  
+interface AppProps {
+  todos: ToDo[];
+  fetchTodos(): any;
+}
+
+class _App extends React.Component<AppProps> {
+
+  onButtonClick = (): void => {
+    this.props.fetchTodos()
+  }
+
+  renderList(): JSX.Element[]{
+    return this.props.todos.map((todo: ToDo) => {
+        return (
+          <div key={todo.id}>{todo.title}</div>
+        ) 
+      }
+    )
+  }
+
   render(){
+    console.log(this.props.todos)
     return(
       <div>
-        <h1>Hi There !</h1>
+        <button onClick={this.onButtonClick}>Fetch</button>
+        {this.renderList()}
       </div>
     )
   }
 }
 
-export default App
+  
+const mapStateToProps = (state: StoreState): { todos: ToDo[]} => {
+  return { todos: state.todos }
+}
+
+export const App = connect(
+  mapStateToProps, { fetchTodos }
+)(_App)
+
 
 
 

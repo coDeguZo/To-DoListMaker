@@ -1,6 +1,7 @@
 # To Do List Maker!
 
 React => "16.13.1"
+<br />
 TypeScript => "3.7.2"
 
 ## Summary
